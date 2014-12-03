@@ -49,6 +49,10 @@ static XcodeKit *sharedPlugin;
             NSMenuItem *actionMenuItem2 = [[NSMenuItem alloc] initWithTitle:@"Duplicate Selection / Line" action:@selector(duplicateSelection) keyEquivalent:@"cmd+d"];
             [actionMenuItem2 setTarget:self];
             [[menuItem submenu] addItem:actionMenuItem2];
+            
+            NSMenuItem *actionMenuItem3 = [[NSMenuItem alloc] initWithTitle:@"CRLF to LF in Selection" action:@selector(convertLineEndings) keyEquivalent:@""];
+            [actionMenuItem3 setTarget:self];
+            [[menuItem submenu] addItem:actionMenuItem3];
         }
     }
     return self;
@@ -62,6 +66,11 @@ static XcodeKit *sharedPlugin;
         return ([firstResponder isKindOfClass:NSClassFromString(@"DVTSourceTextView")] && [firstResponder isKindOfClass:[NSTextView class]]);
     }
     else if([menuItem action] == @selector(duplicateSelection))
+    {
+        NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
+        return ([firstResponder isKindOfClass:NSClassFromString(@"DVTSourceTextView")] && [firstResponder isKindOfClass:[NSTextView class]]);
+    }
+    else if([menuItem action] == @selector(convertLineEndings))
     {
         NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
         return ([firstResponder isKindOfClass:NSClassFromString(@"DVTSourceTextView")] && [firstResponder isKindOfClass:[NSTextView class]]);
@@ -144,6 +153,20 @@ static XcodeKit *sharedPlugin;
             [codeEditor setSelectedRange:NSMakeRange(currentLineRange.location + currentLineRange.length - 1, 0)];
         }
 	}
+}
+
+-(void)convertLineEndings
+{
+    [self updateIvars];
+    
+    if(codeEditor)
+    {
+        if(currentSelection && [currentSelection isNotEqualTo:@""])
+        {
+            NSString *copy = [currentSelection stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+            [codeEditor insertText:copy];
+        }
+    }
 }
 
 -(void)dealloc
