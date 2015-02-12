@@ -23,6 +23,7 @@
 		BBF30879183CE1D4004E1A8A /* XcodeKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XcodeKit-Prefix.pch"; sourceTree = "<group>"; };
 		BBF3087F183CE31B004E1A8A /* XcodeKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodeKit.h; sourceTree = "<group>"; };
 		BBF30880183CE31B004E1A8A /* XcodeKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XcodeKit.m; sourceTree = "<group>"; };
+		DAB05F351A8D54A5007286A4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +44,7 @@
 				BBF30873183CE1D4004E1A8A /* XcodeKit */,
 				BBF3086C183CE1D4004E1A8A /* Frameworks */,
 				BBF3086B183CE1D4004E1A8A /* Products */,
+				DAB05F351A8D54A5007286A4 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};

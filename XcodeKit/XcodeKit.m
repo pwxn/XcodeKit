@@ -42,17 +42,28 @@ static XcodeKit *sharedPlugin;
         {
             [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
             
-            NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Selection / Line" action:@selector(deleteSelection) keyEquivalent:@"cmd+E"];
+            NSMenuItem *actionMenuItem;
+            
+            actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Selection / Line" action:@selector(deleteSelection) keyEquivalent:@"d"];
+            [actionMenuItem setKeyEquivalentModifierMask:NSCommandKeyMask];
             [actionMenuItem setTarget:self];
             [[menuItem submenu] addItem:actionMenuItem];
             
-            NSMenuItem *actionMenuItem2 = [[NSMenuItem alloc] initWithTitle:@"Duplicate Selection / Line" action:@selector(duplicateSelection) keyEquivalent:@"cmd+d"];
-            [actionMenuItem2 setTarget:self];
-            [[menuItem submenu] addItem:actionMenuItem2];
+            unichar arrow = NSDownArrowFunctionKey;
+            actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Duplicate Selection / Line" action:@selector(duplicateSelection) keyEquivalent:[NSString stringWithCharacters:&arrow length:1]];
+            [actionMenuItem setKeyEquivalentModifierMask:NSAlternateKeyMask|NSControlKeyMask];
+            [actionMenuItem setTarget:self];
+            [[menuItem submenu] addItem:actionMenuItem];
             
-            NSMenuItem *actionMenuItem3 = [[NSMenuItem alloc] initWithTitle:@"CRLF to LF in Selection" action:@selector(convertLineEndings) keyEquivalent:@""];
-            [actionMenuItem3 setTarget:self];
-            [[menuItem submenu] addItem:actionMenuItem3];
+            actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"New Line After Current" action:@selector(newLineAfterCurrent) keyEquivalent:@"\n"];
+            [actionMenuItem setKeyEquivalentModifierMask:NSShiftKeyMask];
+            [actionMenuItem setTarget:self];
+            [[menuItem submenu] addItem:actionMenuItem];
+            
+            actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"CRLF to LF in Selection" action:@selector(convertLineEndings) keyEquivalent:@""];
+            [actionMenuItem setTarget:self];
+            [[menuItem submenu] addItem:actionMenuItem];
+
         }
     }
     return self;
@@ -60,17 +71,10 @@ static XcodeKit *sharedPlugin;
 
 -(BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    if([menuItem action] == @selector(deleteSelection))
-    {
-        NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
-        return ([firstResponder isKindOfClass:NSClassFromString(@"DVTSourceTextView")] && [firstResponder isKindOfClass:[NSTextView class]]);
-    }
-    else if([menuItem action] == @selector(duplicateSelection))
-    {
-        NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
-        return ([firstResponder isKindOfClass:NSClassFromString(@"DVTSourceTextView")] && [firstResponder isKindOfClass:[NSTextView class]]);
-    }
-    else if([menuItem action] == @selector(convertLineEndings))
+    if([menuItem action] == @selector(deleteSelection)    ||
+       [menuItem action] == @selector(duplicateSelection) ||
+       [menuItem action] == @selector(convertLineEndings) ||
+       [menuItem action] == @selector(newLineAfterCurrent) )
     {
         NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
         return ([firstResponder isKindOfClass:NSClassFromString(@"DVTSourceTextView")] && [firstResponder isKindOfClass:[NSTextView class]]);
@@ -165,6 +169,20 @@ static XcodeKit *sharedPlugin;
         {
             NSString *copy = [currentSelection stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
             [codeEditor insertText:copy];
+        }
+    }
+}
+
+-(void)newLineAfterCurrent
+{
+    [self updateIvars];
+    
+    if(codeEditor)
+    {
+        if(currentLineRange.location != NSNotFound)
+        {
+            [codeEditor setSelectedRange:NSMakeRange(currentLineRange.location + currentLineRange.length-1, 0)];
+            [codeEditor insertText:@"\n"];
         }
     }
 }
