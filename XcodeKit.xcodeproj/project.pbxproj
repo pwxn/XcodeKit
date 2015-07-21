@@ -253,7 +253,7 @@
 				GCC_PREFIX_HEADER = "XcodeKit/XcodeKit-Prefix.pch";
 				INFOPLIST_FILE = "XcodeKit/XcodeKit-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xcplugin;
 			};
@@ -269,7 +269,7 @@
 				GCC_PREFIX_HEADER = "XcodeKit/XcodeKit-Prefix.pch";
 				INFOPLIST_FILE = "XcodeKit/XcodeKit-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xcplugin;
 			};

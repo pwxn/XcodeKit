@@ -35,38 +35,48 @@ static XcodeKit *sharedPlugin;
     if(self = [super init])
     {
         self.bundle = plugin;
-     
-        NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
         
-        if(menuItem)
-        {
-            [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
-            
-            NSMenuItem *actionMenuItem;
-            
-            actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Selection / Line" action:@selector(deleteSelection) keyEquivalent:@"d"];
-            [actionMenuItem setKeyEquivalentModifierMask:NSCommandKeyMask];
-            [actionMenuItem setTarget:self];
-            [[menuItem submenu] addItem:actionMenuItem];
-            
-            unichar arrow = NSDownArrowFunctionKey;
-            actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Duplicate Selection / Line" action:@selector(duplicateSelection) keyEquivalent:[NSString stringWithCharacters:&arrow length:1]];
-            [actionMenuItem setKeyEquivalentModifierMask:NSAlternateKeyMask|NSControlKeyMask];
-            [actionMenuItem setTarget:self];
-            [[menuItem submenu] addItem:actionMenuItem];
-            
-            actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"New Line After Current" action:@selector(newLineAfterCurrent) keyEquivalent:@"\n"];
-            [actionMenuItem setKeyEquivalentModifierMask:NSShiftKeyMask];
-            [actionMenuItem setTarget:self];
-            [[menuItem submenu] addItem:actionMenuItem];
-            
-            actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"CRLF to LF in Selection" action:@selector(convertLineEndings) keyEquivalent:@""];
-            [actionMenuItem setTarget:self];
-            [[menuItem submenu] addItem:actionMenuItem];
-
-        }
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didApplicationFinishLaunchingNotification:)
+                                                     name:NSApplicationDidFinishLaunchingNotification
+                                                   object:nil];
     }
     return self;
+}
+
+-(void)didApplicationFinishLaunchingNotification:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
+    
+    NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
+    
+    if(menuItem)
+    {
+        [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
+        
+        NSMenuItem *actionMenuItem;
+        
+        actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Selection / Line" action:@selector(deleteSelection) keyEquivalent:@"d"];
+        [actionMenuItem setKeyEquivalentModifierMask:NSCommandKeyMask];
+        [actionMenuItem setTarget:self];
+        [[menuItem submenu] addItem:actionMenuItem];
+        
+        unichar arrow = NSDownArrowFunctionKey;
+        actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Duplicate Selection / Line" action:@selector(duplicateSelection) keyEquivalent:[NSString stringWithCharacters:&arrow length:1]];
+        [actionMenuItem setKeyEquivalentModifierMask:NSAlternateKeyMask|NSControlKeyMask];
+        [actionMenuItem setTarget:self];
+        [[menuItem submenu] addItem:actionMenuItem];
+        
+        actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"New Line After Current" action:@selector(newLineAfterCurrent) keyEquivalent:@"\n"];
+        [actionMenuItem setKeyEquivalentModifierMask:NSShiftKeyMask];
+        [actionMenuItem setTarget:self];
+        [[menuItem submenu] addItem:actionMenuItem];
+        
+        actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"CRLF to LF in Selection" action:@selector(convertLineEndings) keyEquivalent:@""];
+        [actionMenuItem setTarget:self];
+        [[menuItem submenu] addItem:actionMenuItem];
+        
+    }
 }
 
 -(BOOL)validateMenuItem:(NSMenuItem *)menuItem
@@ -189,6 +199,7 @@ static XcodeKit *sharedPlugin;
 
 -(void)dealloc
 {
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
