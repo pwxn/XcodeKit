@@ -27,8 +27,8 @@
             [lines removeObjectAtIndex:firstSelectionLine];
             if (firstSelectionLine != 0){
                 [selectedRanges removeAllObjects];
-                [selectedRanges addObject:[[XCSourceTextRange alloc] initWithStart:XCSourceTextPositionMake(firstSelectionLine-1, lines[firstSelectionLine-1].length-1)
-                                                                               end:XCSourceTextPositionMake(firstSelectionLine-1, lines[firstSelectionLine-1].length-1)]];
+                [selectedRanges addObject:[[XCSourceTextRange alloc] initWithStart:XCSourceTextPositionMake(firstSelectionLine, lines[firstSelectionLine].length-1)
+                                                                               end:XCSourceTextPositionMake(firstSelectionLine, lines[firstSelectionLine].length-1)]];
             }
         }
     } else if ([invocation.commandIdentifier isEqualToString:@"com.pwxn.XcodeKit8App.XcodeKit8.DuplicateLine"]){
@@ -40,8 +40,8 @@
         [lines insertObject:lines[firstSelectionLine] atIndex:firstSelectionLine+1];
         
         [selectedRanges removeAllObjects];
-        [selectedRanges addObject:[[XCSourceTextRange alloc] initWithStart:XCSourceTextPositionMake(firstSelectionLine+1, lines[firstSelectionLine].length-1)
-                                                                       end:XCSourceTextPositionMake(firstSelectionLine+1, lines[firstSelectionLine].length-1)]];
+        [selectedRanges addObject:[[XCSourceTextRange alloc] initWithStart:XCSourceTextPositionMake(firstSelectionLine, lines[firstSelectionLine].length-1)
+                                                                       end:XCSourceTextPositionMake(firstSelectionLine, lines[firstSelectionLine].length-1)]];
     } else if ([invocation.commandIdentifier isEqualToString:@"com.pwxn.XcodeKit8App.XcodeKit8.NewLineAfterCurrent"]){
         NSInteger firstSelectionLine =  selectedRanges.firstObject.start.line;
         NSString * previous = lines[firstSelectionLine];
