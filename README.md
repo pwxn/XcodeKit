@@ -3,7 +3,7 @@ XcodeKit
 
 Extra features for working with adding and removing lines in Xcode
 
-####Features (added to Edit menu)
+####Features (added to Editor menu)
 - Delete Selection / Line
 - Duplicate Selection / Line
 - New Line After Current
@@ -12,18 +12,10 @@ Extra features for working with adding and removing lines in Xcode
 #### Install from source
 - Clone the source
 - Build
-- (Xcode should place the products in the correct place)
+- Copy the Application from products somewhere permanent (ie ~/Applications)
+- Run that Application, then quit it. (it does nothing but must be run once)
+- Open system preferences, Extensions tab, check box to allow XcodeKit8App
 - Restart Xcode
 
-####To install pre-compiled plugin:
-- Note that I sometimes don't remember to update the zip every commit, you might want to check that
-- Download XcodeKit.xcplugin.zip
-- Unzip and put it into your ~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/
-- Restart Xcode and you should see to new menu items in Edit menu
-
-
-
-
-
-
-You can override the default shortcuts for these commands from System Preferences -> Keyboard -> Shortcuts -> 
+The commands will appear under the menu Editor > XCodeKit8App]
+You can set the shortcuts for these commands from Xcode preferences
