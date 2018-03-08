@@ -3,7 +3,7 @@ XcodeKit
 
 Extra features for working with adding and removing lines in Xcode
 
-####Features (added to Editor menu)
+#### Features (added to Editor menu)
 - Delete Selection / Line
 - Duplicate Selection / Line
 - New Line After Current
@@ -11,7 +11,7 @@ Extra features for working with adding and removing lines in Xcode
 
 #### Install from source
 - Clone the source
-- Build
+- Build Target: XcodeKit8App
 - Copy the Application from products somewhere permanent (ie ~/Applications)
 - Run that Application, then quit it. (it does nothing but must be run once)
 - Open system preferences, Extensions tab, check box to allow XcodeKit8App

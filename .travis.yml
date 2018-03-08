@@ -1,0 +1,3 @@
+language: objective-c
+xcode_project: XcodeKit.xcodeproj
+xcode_scheme: XcodeKit8App
