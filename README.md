@@ -17,5 +17,5 @@ Extra features for working with adding and removing lines in Xcode
 - Open system preferences, Extensions tab, check box to allow XcodeKit8App
 - Restart Xcode
 
-The commands will appear under the menu Editor > XCodeKit8App]
+The commands will appear under the menu Editor > XCodeKit8App
 You can set the shortcuts for these commands from Xcode preferences
