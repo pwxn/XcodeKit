@@ -19,18 +19,16 @@
     
     if ([invocation.commandIdentifier isEqualToString:@"com.pwxn.XcodeKit8App.XcodeKit8.DeleteLine"]){
         // Delete all lines that are selected with the first selection
+        NSInteger firstSelectionLine =  selectedRanges.firstObject.start.line;
         if(selectedRanges.count && selectedRanges.firstObject.start.line != selectedRanges.firstObject.end.line ){
-            [lines removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(selectedRanges.firstObject.start.line, selectedRanges.firstObject.end.line - selectedRanges.firstObject.start.line)]];
+            [lines removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(selectedRanges.firstObject.start.line, selectedRanges.firstObject.end.line + 1 - selectedRanges.firstObject.start.line)]];
         }
         else {
-            NSInteger firstSelectionLine =  selectedRanges.firstObject.start.line;
             [lines removeObjectAtIndex:firstSelectionLine];
-            if (firstSelectionLine != 0){
-                [selectedRanges removeAllObjects];
-                [selectedRanges addObject:[[XCSourceTextRange alloc] initWithStart:XCSourceTextPositionMake(firstSelectionLine, lines[firstSelectionLine].length-1)
-                                                                               end:XCSourceTextPositionMake(firstSelectionLine, lines[firstSelectionLine].length-1)]];
-            }
         }
+        [selectedRanges removeAllObjects];
+        [selectedRanges addObject:[[XCSourceTextRange alloc] initWithStart:XCSourceTextPositionMake(firstSelectionLine, lines[firstSelectionLine].length-1)
+                                                                       end:XCSourceTextPositionMake(firstSelectionLine, lines[firstSelectionLine].length-1)]];
     } else if ([invocation.commandIdentifier isEqualToString:@"com.pwxn.XcodeKit8App.XcodeKit8.DuplicateLine"]){
         NSInteger firstSelectionLine =  selectedRanges.firstObject.start.line;
         if (firstSelectionLine >= invocation.buffer.lines.count){
