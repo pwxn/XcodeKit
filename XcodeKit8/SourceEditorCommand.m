@@ -21,7 +21,8 @@
         // Delete all lines that are selected with the first selection
         NSInteger firstSelectionLine =  selectedRanges.firstObject.start.line;
         if(selectedRanges.count && selectedRanges.firstObject.start.line != selectedRanges.firstObject.end.line ){
-            [lines removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(selectedRanges.firstObject.start.line, selectedRanges.firstObject.end.line + 1 - selectedRanges.firstObject.start.line)]];
+            int extraLine = selectedRanges.firstObject.end.column == 0 ? 0 : 1; // if you select full lines, an extra one will be deleted (ie triple click)
+            [lines removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(selectedRanges.firstObject.start.line, selectedRanges.firstObject.end.line + extraLine - selectedRanges.firstObject.start.line)]];
         }
         else {
             [lines removeObjectAtIndex:firstSelectionLine];
