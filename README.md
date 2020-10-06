@@ -1,3 +1,5 @@
+**Deprecation warning:** I have moved to [a new extension](https://github.com/pwxn/XLineTool) and will no longer be maintaining this
+
 XcodeKit
 ========
 
